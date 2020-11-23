@@ -5,11 +5,10 @@ namespace ExpenseManager
     public class ExpenseSystem
     {
         public ExpenseSystem(IStoreExpense expenseStorage)
-        {
-          //  _userList=new List<User>();
-         // _expenseList=new List<ExpenseDetail>();
+        {//dependency injection and init
          _expenseStorage=expenseStorage;
-
+        
+        //adding 2 expense manually
          _expenseStorage.AddExpense(new ExpenseDetail() {
               ItemId=Guid.NewGuid(),
               StoreName="Superstore",
@@ -39,6 +38,27 @@ namespace ExpenseManager
 
         public List<ExpenseDetail> ViewAllExpense(){
             return _expenseStorage.ViewExpense();
+        }
+
+        public void UpdateEachExpense(Guid id,double amount){
+            var expense = _expenseStorage.GetById(id);
+
+            if (expense == null) {
+                throw new Exception($"Item {id} does not exist!!");
+            }
+           
+            _expenseStorage.UpdateExpense(expense,amount);
+
+        }
+        public void DeleteEachExpense(Guid id){
+            var expense = _expenseStorage.GetById(id);
+
+            if (expense == null) {
+                throw new Exception($"Item {id} does not exist!!");
+            }
+
+            _expenseStorage.DeleteExpense(expense);
+
         }
 
         public void visitedLocation()

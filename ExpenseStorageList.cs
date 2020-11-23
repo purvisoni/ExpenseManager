@@ -19,13 +19,26 @@ namespace ExpenseManager{
             return _expenseList;
         }
 
-        public void UpdateExpense(){
-            Console.WriteLine("Updating the expense...");
+        public void UpdateExpense(ExpenseDetail expense,double amount){
+            expense.Amount = amount;
+            Console.WriteLine("Updated amount in expense!!!");
 
         }
-        public void DeleteExpense(){
-            Console.WriteLine("Deleting the expense...");
+        public void DeleteExpense(ExpenseDetail expense){
+            
+            _expenseList.Remove(expense);
+            Console.WriteLine("The expense deleted!!!");
 
+        }
+
+        public ExpenseDetail GetById(Guid id){
+            var expense = _expenseList.Find(x => x.ItemId == id);
+
+            if (expense == null) {
+                throw new Exception($"Item {id} does not exist!!");
+            }
+
+            return expense;
         }
     
 

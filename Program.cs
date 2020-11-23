@@ -55,15 +55,28 @@ namespace ExpenseManager
                         Console.WriteLine($"Error: {e.Message}");
                     }
                 }
-
+                  //Update amount in specific object of expense
                 if(userInput=="u")
                 {
-                 // theExpenseSystem.UpdateExpense();;
+                  Console.WriteLine("Enter Guid of expense to change:");
+                  string userInput1=Console.ReadLine();
+                  Guid no=Guid.Parse(userInput1);
+
+                  Console.WriteLine("Enter amount to change:");
+                  string userInput2=Console.ReadLine();
+                  double amount=Convert.ToDouble(userInput2);
+                 theExpenseSystem.UpdateEachExpense(no,amount);
                 }
+
+                //Delete specific object of expense
                 if(userInput=="d")
                 {
-                 // theExpenseSystem.DeleteExpense();
+                  Console.WriteLine("Enter Guid to delete expense:");
+                  string userInput1=Console.ReadLine();
+                  Guid no=Guid.Parse(userInput1);
+                  theExpenseSystem.DeleteEachExpense(no);
                 }
+
                 if(userInput=="l")
                 {
                     theExpenseSystem.visitedLocation();

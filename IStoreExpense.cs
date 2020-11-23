@@ -7,7 +7,8 @@ namespace ExpenseManager{
         void AddExpense(ExpenseDetail expense);
 
         List<ExpenseDetail> ViewExpense();
-        void UpdateExpense();
-        void DeleteExpense();
+        void UpdateExpense(ExpenseDetail expense, double amount);
+        void DeleteExpense(ExpenseDetail expense);
+        ExpenseDetail GetById(Guid id);
     }
 }
