@@ -4,56 +4,41 @@ namespace ExpenseManager
 {
     public class ExpenseSystem
     {
-        public ExpenseSystem()
+        public ExpenseSystem(IStoreExpense expenseStorage)
         {
           //  _userList=new List<User>();
-          _expenseList=new List<ExpenseDetail>();
+         // _expenseList=new List<ExpenseDetail>();
+         _expenseStorage=expenseStorage;
 
-          var expense1=new ExpenseDetail() {
+         _expenseStorage.AddExpense(new ExpenseDetail() {
               ItemId=Guid.NewGuid(),
               StoreName="Superstore",
               ItemName="Milk",
               Amount=4.56,
               ExpenseDate=DateTime.Now,
               Category="Food"
-          };
+          });
 
-          var expense2=new ExpenseDetail() {
+        _expenseStorage.AddExpense(new ExpenseDetail() {
               ItemId=Guid.NewGuid(),
               StoreName="Walmart",
               ItemName="Trouser",
               Amount=11,
               ExpenseDate=DateTime.Now,
               Category="Clothes"
-          };
-
-          _expenseList.Add(expense1);
-          _expenseList.Add(expense2);
+          });
         }
 
         //storage
-        //private List<User> _userList;
-        private List<ExpenseDetail> _expenseList;
-        public void AddExpense(ExpenseDetail expense)
-        {
-            _expenseList.Add(expense);
-            Console.WriteLine("Adding an expense...");
+        private readonly IStoreExpense _expenseStorage;
+       
+        public void AddNewExpense(ExpenseDetail newExpense){
+            _expenseStorage.AddExpense(newExpense);
+            
         }
-        public void ViewExpense()
-        {
-            Console.WriteLine("Viewing the expense...");
-            for (int i=0;i<_expenseList.Count;i++)
-            {
-                Console.WriteLine(_expenseList[i].ItemName);
-            }
-        }
-        public void UpdateExpense()
-        {
-            Console.WriteLine("Updating the expense...");
-        }
-        public void DeleteExpense()
-        {
-            Console.WriteLine("Deleting the expense...");
+
+        public List<ExpenseDetail> ViewAllExpense(){
+            return _expenseStorage.ViewExpense();
         }
 
         public void visitedLocation()

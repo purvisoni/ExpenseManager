@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace ExpenseManager
 {
@@ -6,7 +7,8 @@ namespace ExpenseManager
     {
         static void Main(string[] args)
         {
-            var theExpenseSystem=new ExpenseSystem();
+            var expenseStorage = new ExpenseStorageList();
+            var theExpenseSystem=new ExpenseSystem(expenseStorage);
             Console.WriteLine("Welcome to Expense Manager Application!");
 
             while(true)
@@ -20,6 +22,7 @@ namespace ExpenseManager
                 "q-quit\n ");
 
                 string userInput=Console.ReadLine();
+               //Add new expense
 
                 if(userInput=="c")
                 {
@@ -28,7 +31,7 @@ namespace ExpenseManager
                     int no=Convert.ToInt32(userInput1);
                     Console.WriteLine("Enter each item details in sequence as 1)Storename 2)Itemname 3)Amount 4)Category:");
                     for(int i=0;i<no;i++){
-                        var e1=new ExpenseDetail()
+                      theExpenseSystem.AddNewExpense(new ExpenseDetail()
                      {
                         ItemId=Guid.NewGuid(),
                         StoreName=Console.ReadLine(),
@@ -36,26 +39,30 @@ namespace ExpenseManager
                         Amount=Convert.ToInt32(Console.ReadLine()),
                       //  ExpenseDate=DateTime.Now,
                         Category=Console.ReadLine()
-                     };
-                      theExpenseSystem.AddExpense(e1);
-                    }
-                    
-                 // ExpenseDetail expense;
-                 
+                     });
+                    } 
                 }
+                //View All Expense
 
                 if(userInput=="r")
                 {
-                  theExpenseSystem.ViewExpense();
+                  try {
+                        List<ExpenseDetail> results = theExpenseSystem.ViewAllExpense();
+                        foreach (var expenseDetail in results) {
+                            Console.WriteLine(expenseDetail.ToString());
+                        } 
+                    } catch (Exception e) {
+                        Console.WriteLine($"Error: {e.Message}");
+                    }
                 }
 
                 if(userInput=="u")
                 {
-                  theExpenseSystem.UpdateExpense();;
+                 // theExpenseSystem.UpdateExpense();;
                 }
                 if(userInput=="d")
                 {
-                  theExpenseSystem.DeleteExpense();
+                 // theExpenseSystem.DeleteExpense();
                 }
                 if(userInput=="l")
                 {

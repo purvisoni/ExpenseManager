@@ -6,6 +6,6 @@ namespace ExpenseManager
     {
         public Guid Id { get; set; }
         public string LocationName { get; set; }
-        public string EmailId { get; set; }
+        public int NoOfItems { get; set; }
     }
 }
